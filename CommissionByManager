@@ -1,0 +1,15 @@
+WITH emp_count AS (
+				SELECT mngr, count(*) cnt from(
+				SELECT e.MANAGER_ID mngr
+				FROM EMPLOYEES e 
+				UNION all
+				SELECT e.EMPLOYEE_ID 
+				FROM EMPLOYEES e)
+				GROUP BY mngr),
+	comm AS (
+		SELECT e.commission_pct, count(*) cnt
+		FROM EMPLOYEES e
+		WHERE e.commission_pct IS NOT NULL 
+		GROUP BY e.COMMISSION_PCT)
+SELECT * FROM emp_count right JOIN comm
+	ON emp_count.cnt = comm.cnt
