@@ -1,0 +1,35 @@
+'write a SQL statement to select data from one table that is not in another table'
+
+CREATE TABLE tab1 (C1 varchar2(1))
+
+CREATE TABLE tab2 (C1 varchar2(1))
+
+INSERT INTO tab1 VALUES('A');
+INSERT INTO tab1 VALUES('B');
+INSERT INTO tab1 VALUES('C');
+INSERT INTO tab1 VALUES('D');
+INSERT INTO tab1 VALUES('E');
+
+INSERT INTO tab2 VALUES('A')
+INSERT INTO tab2 VALUES('C')
+INSERT INTO tab2 VALUES('E')
+INSERT INTO tab2 VALUES('G')
+
+COMMIT;
+SELECT * FROM tab1
+SELECT * FROM tab2
+
+SELECT * FROM tab1 WHERE C1 NOT IN (SELECT * FROM tab2)
+
+SELECT * FROM tab1 where NOT EXISTS (SELECT 1 FROM tab2 WHERE tab2.c1 = tab1.c1);
+
+SELECT * FROM tab1
+MINUS
+SELECT * FROM tab2
+
+SELECT * FROM tab1
+WHERE 1 > (SELECT count(*) FROM tab2 WHERE tab1.c1 = tab2.c1)
+
+SELECT * FROM 
+tab1 LEFT OUTER JOIN tab2 ON tab1.c1 = tab2.c1
+WHERE tab2.c1 IS NULL 
