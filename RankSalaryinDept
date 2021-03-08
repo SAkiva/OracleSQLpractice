@@ -1,0 +1,11 @@
+SELECT e.employee_id, e.salary, e.DEPARTMENT_ID,
+rank() OVER(PARTITION BY e.department_id
+			ORDER BY e.salary DESC) AS RNK
+FROM EMPLOYEES e;
+
+SELECT EMPLOYEE_ID, salary, DEPARTMENT_ID, RNK
+FROM 
+(SELECT e.employee_id, e.salary, e.DEPARTMENT_ID,
+rank() OVER(PARTITION BY e.department_id
+			ORDER BY e.salary DESC) AS RNK
+FROM EMPLOYEES e) WHERE RNK = 2;
