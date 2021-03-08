@@ -1,0 +1,26 @@
+
+'Writing sql statement to select employees getting salary greater than average salary of their department'
+
+SELECT e.employee_id, e.salary, e.department_id
+FROM EMPLOYEES e
+
+SELECT e.department_id, trunc(avg(e.salary)) av_sal
+FROM EMPLOYEES e
+GROUP BY e.DEPARTMENT_ID 
+
+SELECT *
+FROM EMPLOYEES e, (SELECT e.department_id, trunc(avg(e.salary)) av_sal
+	FROM EMPLOYEES e
+	GROUP BY e.DEPARTMENT_ID) b 
+WHERE e.DEPARTMENT_ID = b.department_id
+AND e.SALARY > b.av_sal
+
+SELECT *
+FROM EMPLOYEES e 
+WHERE e.SALARY > (SELECT avg(b.salary) FROM EMPLOYEES b WHERE e.DEPARTMENT_ID = b.DEPARTMENT_ID )
+
+SELECT * FROM (
+SELECT e.employee_id, e.salary, e.department_id,
+avg(e.salary) over(PARTITION BY e.department_id) avg_sal
+FROM EMPLOYEES e)
+WHERE salary > avg_sal
