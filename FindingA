@@ -1,0 +1,37 @@
+'trying to create a new table and finding a letter'
+CREATE TABLE tab1 (
+	s_no NUMBER,
+	col1 varchar2(1),
+	col2 varchar2(1),
+	col3 varchar2(1),
+	col4 varchar2(1),
+	col5 varchar2(1)
+);
+
+INSERT INTO tab1 values(1,'A','B','C','D','E');
+INSERT INTO tab1 values(2,null,'B','C','D','E');
+INSERT INTO tab1 values(3,'A',null,null,null,'E');
+INSERT INTO tab1 values(4,null,'B','C',null,'E');
+INSERT INTO tab1 values(5,'A','B','C','D',null);
+
+SELECT * FROM tab1
+WHERE col1 = 'A'
+	OR col2 = 'A'
+	OR col3 = 'A'
+	OR col4 = 'A'
+	OR col5 = 'A';
+
+SELECT * FROM tab1 WHERE col1='A' UNION ALL 
+SELECT * FROM tab1 WHERE col2='A' UNION ALL 
+SELECT * FROM tab1 WHERE col3='A' UNION ALL 
+SELECT * FROM tab1 WHERE col4='A' UNION ALL 
+SELECT * FROM tab1 WHERE col5='A'
+
+SELECT * FROM tab1
+WHERE 'A' IN (col1,col2,col3,col4,col5)
+
+SELECT * FROM tab1
+WHERE col1||col2||col3||col4||col5 LIKE '%A%'
+
+SELECT * FROM tab1
+WHERE instr (col1||col2||col3||col4||col5 ,'A') > 0
