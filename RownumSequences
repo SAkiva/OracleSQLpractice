@@ -1,0 +1,22 @@
+SELECT rownum FROM EMPLOYEES e 
+
+SELECT rownum, LEVEL 
+FROM dual
+CONNECT BY LEVEL <= 15
+
+WITH t1 (id) AS (
+	SELECT 1 id
+	FROM dual
+	UNION ALL
+	SELECT id + 1
+	FROM t1
+	WHERE id < 10)
+SELECT id FROM t1
+
+SELECT rownum FROM (
+SELECT 1 num
+FROM DUAL GROUP BY cube(1,2,3,4))
+WHERE rownum<=10
+
+SELECT rownum
+FROM xmltable('1 to 10')
