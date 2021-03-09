@@ -1,0 +1,7 @@
+SELECT e.first_name||e.last_name ename,
+	length(e.first_name||e.last_name) - length(REPLACE(upper(e.first_name||e.last_name),'A')) A,
+	length(e.first_name||e.last_name) - length(REPLACE(upper(e.first_name||e.last_name),'E')) E,
+	length(e.first_name||e.last_name) - length(REPLACE(upper(e.first_name||e.last_name),'I')) I,
+	length(e.first_name||e.last_name) - length(REPLACE(upper(e.first_name||e.last_name),'O')) O,
+	length(e.first_name||e.last_name) - length(REPLACE(upper(e.first_name||e.last_name),'U')) U
+FROM EMPLOYEES e
