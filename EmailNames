@@ -1,0 +1,10 @@
+WITH d AS (SELECT 'a.b.c@gmail.com' m
+FROM dual),
+ds AS (SELECT substr(m,1,instr(m, '@')-1) n,
+	substr(m,instr(m,'@')+1) d
+FROM d)
+SELECT substr(n,1,instr(n,'.',1,1)-1) first_name,
+	substr(n,instr(n,'.',1,1)+1,instr(n,'.',1,2)-instr(n,'.',1,1)-1) middle_name,
+	substr(n,instr(n,'.',1,2)+1) last_name,
+	d
+FROM ds
