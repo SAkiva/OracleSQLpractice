@@ -1,0 +1,11 @@
+SELECT ('WELCOME') FROM DUAL 
+
+SELECT reverse ('WELCOME') FROM DUAL 
+
+WITH t AS (SELECT 'WELCOME' d FROM dual)
+SELECT listagg(s) WITHIN group(ORDER BY l),
+	listagg(s) WITHIN group(ORDER BY l desc)
+FROM (
+SELECT substr(d,LEVEL,1) s, LEVEL l
+FROM t 
+CONNECT BY LEVEL <= length(d))
