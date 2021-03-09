@@ -1,0 +1,29 @@
+SELECT rownum, 
+	substr(s, rownum,1) output1,
+	substr(s, rownum*-1,1) output2,
+	substr(s,1,rownum) output3,
+	substr(s,rownum) output4,
+	rpad(' ', rownum, ' ')||substr(s,rownum) output5,
+	rpad(' ',LENGTH(s)+1-rownum,' ')||substr(s,1,rownum) output6
+FROM dual, (SELECT 'WELCOME' s FROM DUAL)
+CONNECT BY level <= length(s)
+
+SELECT rpad('*',rownum,'*') AS output1,
+	rpad('*',11-rownum,'*') AS output2,
+	rpad(' ',rownum,' ')||rpad('*',11-rownum,'*') AS output3,
+	rpad(' ',11-rownum,' ')||rpad('*',rownum,'*') AS output4,
+	rpad(' ',rownum,' ')||rpad('*',rownum,'*') AS output5,
+	rpad(' ',11-rownum,' ')||rpad(' ',11-rownum,' ')||rpad('*',rownum,'*') AS output6
+FROM DUAL 
+CONNECT BY LEVEL <= 10
+
+WITH d1 AS (SELECT rpad(' ',rownum,' ')||rpad('*',11-rownum,'*')||rpad(' ',11-rownum,' ')||rpad('*',rownum,'*') o1
+FROM DUAL 
+CONNECT BY LEVEL <= 10),
+d2 AS (
+SELECT rpad('*',11-rownum,'*')||rpad(' ',rownum,' ')||rpad('*',rownum,'*')||rpad(' ',rownum,' ') o2
+FROM DUAL 
+CONNECT BY LEVEL <= 10)
+SELECT * FROM d2
+UNION ALL
+SELECT * FROM d1
