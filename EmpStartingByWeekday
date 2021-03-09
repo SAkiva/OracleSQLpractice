@@ -1,0 +1,14 @@
+'number of saturdays and sundays'
+
+SELECT c_date , to_char(c_date, 'DY')
+from(
+SELECT trunc(sysdate, 'MONTH') + LEVEL-1 c_date
+FROM dual 
+CONNECT BY LEVEL <= last_day(trunc(sysdate)) - trunc(sysdate,'MONTH')+1)
+WHERE to_char(c_date, 'DY') in ('SUN')
+
+'employees starting on a monday'
+
+SELECT to_char(trunc(e.hire_date, 'MONTH'), 'DY'), count(*)
+FROM EMPLOYEES e
+GROUP BY to_char(trunc(e.hire_date, 'MONTH'), 'DY') 
