@@ -3,5 +3,6 @@ SELECT e.EMPLOYEE_ID, e.first_name||e.last_name ename,
 	REGEXP_COUNT(upper(e.first_name||e.last_name),'E') E,
 	REGEXP_COUNT(upper(e.first_name||e.last_name),'I') I,
 	REGEXP_COUNT(upper(e.first_name||e.last_name),'O') O,
+	/*REGEXP_COUNT(upper(e.first_name||e.last_name),'U') U*/
 	REGEXP_COUNT(upper(e.first_name||e.last_name),'U') U
 FROM EMPLOYEES e
